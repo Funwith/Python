@@ -17,6 +17,12 @@ def html(url):
 	result.extend([r.status_code,r.headers['content-type'],r.text,r.encoding])
 	return result
 
+def getFileInfo(url):
+	r = urllib.urlopen(url)
+	http_message = r.info()
+	type = http_message.type
+	return type
+	
 # Check Content Type from URL
 # isFile return contains 'application', isDirectory return contains 'text/html'	
 
@@ -26,8 +32,8 @@ def isFile(contentType):
 	if not "text/html" in contentType:
 		return True
 	else:
-		return False
-
+		return False		
+		
 # Check has content from new URL		
 def hasContent(url):
 	return
@@ -57,10 +63,13 @@ def hilite(string, status, bold):
 
 # Recursive funtion load directory and download file.
 location = scrapyExtract(URI)
-print 'URI: found ' + str(len(location)) + ' items'
+print 'URI: found ' + str(len(location)) + ' items\n'
 for i in location:
-	result = html(URI + i)
-	if result[0] == 200 and isFile(result[1]) == False:
-		print 'Directory'
+	type = getFileInfo(URI + i)
+	if isFile(type): 
+		print '\nFile: ' + i
 	else:
-		print 'File'
+		print '\n#Directory: '+ i
+	
+
+# .pptx return Content-type: text/plain	
