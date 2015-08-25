@@ -19,6 +19,9 @@ def html(url):
 
 # Check Content Type from URL
 # isFile return contains 'application', isDirectory return contains 'text/html'	
+
+# FIXME: Using content-type for check file type is bad idea.
+# Request as well as file download :( Long time request for check file type.
 def isFile(contentType):
 	if not "text/html" in contentType:
 		return True
@@ -61,10 +64,3 @@ for i in location:
 		print 'Directory'
 	else:
 		print 'File'
-	
-	
-	
-
-
-	
-	
