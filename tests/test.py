@@ -2,7 +2,6 @@
 # -s Directory to start discovery (. default)
 # -p Pattern to match test files  (test*.py default)
 
-
 import unittest
 from book import Book
 
@@ -15,6 +14,12 @@ class BookTest(unittest.TestCase):
 		book = Book()
 		book.add("0xgi","09633")
 		self.assertEqual("09633", book.lookup("0xgi"))
+		
+	@unittest.skip("WIP")	
+	def test_remove_book(self):
+		book = Book()
+		self.assertTrue(book.remove("0xgi"))
+		
 		
 if __name__ == '__main__':
 	unittest.main()
