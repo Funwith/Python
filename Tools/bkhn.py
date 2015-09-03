@@ -1,6 +1,6 @@
 # Language: Python
 # Development Environment: Windows 8.1
-# Author: 0xgi
+# Author: Vietworm
 # Description: Download document file from URL: http://www.cse.hcmut.edu.vn/~hungnq/courses/ 
 
 # Dependency: requests, scrapy, urllib
@@ -15,7 +15,7 @@ URI = 'http://www.cse.hcmut.edu.vn/~hungnq/courses/'
 def html(url):
 	r = requests.get(url)
 	result = []
-	result.extend([r.status_code,r.headers['content-type'],r.text,r.encoding])
+	result.extend([r.status_code,r.headers['content-type'],r.text,r.encoding, r.headers['content-length']])
 	return result
 
 def getFileInfo(url):
@@ -60,17 +60,20 @@ def hilite(string, status, bold):
     return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)	
 	
 def main(location, URI):
-	print 'Download processing...'
 	for i in location:
+		print 'Download: ' + i
 		url = URI + i
 		if isFile(url):
 			try:
 				download(url, i)
-				print '(Complete) - ' + url
+				print 'Successfully: ' + url
 			except IOError:
 				print "####URL: " + url + " can't download"
 		else:
 			subLocation = scrapyExtract(url)
+			if not subLocation:
+				print 'Directory is Empty'
+				break
 			main(subLocation, URI + i)	
 	
 # print hilite('crawler','green',False)	
