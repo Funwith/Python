@@ -6,6 +6,7 @@
 # Dependency: requests, scrapy, urllib
 # Installation: pip install <package>
 
+import os
 import requests
 import urllib
 import scrapy
@@ -44,8 +45,15 @@ def scrapyExtract(url):
 	return sel.xpath('//td//@href').extract()[1:] # Find @href value from text/plain.
 
 def download(path, fileName):
+	# directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Documents")
+	# if os.path.dir(directory) == False:
+		# os.mkdir("Documents")
+	if os.path.exists('Document') == False:
+		os.mkdir('Document')
+	
+	fileSave = os.path.join('Document', fileName)
 	d = urllib.URLopener()
-	d.retrieve(path, fileName)
+	d.retrieve(path, fileSave)
 	
 def hilite(string, status, bold):
     attr = []
