@@ -5,5 +5,4 @@ python:
 # Command to install dependencies
 install:
   - "pip install --upgrade pip"
-  - "pip install urllib"
   - "pip install scrapy"
