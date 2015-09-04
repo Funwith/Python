@@ -3,7 +3,7 @@
 # Author: Vietworm
 # Description: Download document file from URL: http://www.cse.hcmut.edu.vn/~hungnq/courses/ 
 
-# Dependency: requests, scrapy, urllib
+# Dependency: requests, scrapy
 # Installation: pip install <package>
 
 import os
@@ -34,10 +34,6 @@ def isFile(url):
 		return False
 	else:
 		return True
-		
-# Check has content from new URL		
-def hasContent(url):
-	return
 	
 def scrapyExtract(url):
 	r = html(url) # Return array from requests [status_code, content-type, text/plain, encoding]
