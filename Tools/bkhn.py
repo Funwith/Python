@@ -1,4 +1,4 @@
-# Language: Python
+# Language: Python 2.7
 # Development Environment: Windows 8.1
 # Author: Vietworm
 # Description: Download document file from URL: http://www.cse.hcmut.edu.vn/~hungnq/courses/ 
