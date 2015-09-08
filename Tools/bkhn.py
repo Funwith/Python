@@ -1,3 +1,4 @@
+# Application: pyDownload
 # Language: Python 2.7
 # Development Environment: Windows 8.1
 # Author: Vietworm
@@ -11,78 +12,86 @@ import requests
 import urllib
 import scrapy
 import mimetypes
-URI = 'http://www.cse.hcmut.edu.vn/~hungnq/courses/'
+URI = 'http://www.cse.hcmut.edu.vn/~hungnq/courses/lopchuyendoi/'
+_name = 'pyDownload'
 
 def html(url):
+	"""
+	A head process URL, return http header information array.
+	"""
 	r = requests.get(url)
 	result = []
 	result.extend([r.status_code,r.headers['content-type'],r.text,r.encoding, r.headers['content-length']])
+	print result
 	return result
 
-def getFileInfo(url):
-	r = urllib.urlopen(url)
-	http_message = r.info()
-	type = http_message.type
-	return type
-	
 # Check Content Type from URL
 # isFile return contains 'application', isDirectory return contains 'text/html'	
 
 # Get file type using mimetypes modules
 def isFile(url):
+	"""
+	Return boolean True or False, using check file type of URL.
+	"""
 	if mimetypes.guess_type(url, strict=True)[0] == None:
 		return False
 	else:
 		return True
 	
 def scrapyExtract(url):
+	"""
+	Scrapy modules, get attributes html text plain for after process. 
+	"""
 	r = html(url) # Return array from requests [status_code, content-type, text/plain, encoding]
 	sel = scrapy.Selector(text=r[2], type="html")
 	return sel.xpath('//td//@href').extract()[1:] # Find @href value from text/plain.
 
 def download(path, fileName):
-	# directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Documents")
-	# if os.path.dir(directory) == False:
-		# os.mkdir("Documents")
-	if os.path.exists('Document') == False:
-		os.mkdir('Document')
-	
-	fileSave = os.path.join('Document', fileName)
+	"""
+	Download file from URL.
+	"""
+	fileSave = os.path.join(_name, fileName)
 	d = urllib.URLopener()
 	d.retrieve(path, fileSave)
 	
-def hilite(string, status, bold):
-    attr = []
-    if status:
-        # green
-        attr.append('32')
-    else:
-        # red
-        attr.append('31')
-    if bold:
-        attr.append('1')
-    return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)	
+def chalk(string, status, bold):
+	"""Supported for highlight print messages to commandline (on windows) or terminal (on Unix).
+	Example: print chalk('pyDownload', 'green', False)"""
+	attr = []
+	if status:
+		# green
+		attr.append('32')
+	else:
+		# red
+		attr.append('31')
+	if bold:
+		attr.append('1')
+	return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)
 	
 def main(location, URI):
+	"""
+	Created folder 'pyDownload for save as to folder' and process download file.
+	"""
+	if os.path.exists(_name) == False:
+		os.mkdir(_name)
+		print "\nThe directory was created successfully."
+		
 	for i in location:
-		print 'Download: ' + i
 		url = URI + i
 		if isFile(url):
 			try:
 				download(url, i)
-				print 'Successfully: ' + url
+				print '\nSuccessfully: ' + url
 			except IOError:
-				print "####URL: " + url + " can't download"
+				print "\n### URL: " + url + " can't download."
 		else:
 			subLocation = scrapyExtract(url)
 			if not subLocation:
-				print 'Directory is Empty'
+				print '\n### Directory is empty.'
 				break
 			main(subLocation, URI + i)	
-	
-# print hilite('crawler','green',False)	
 
-# Recursive funtion load directory and download file.
-location = scrapyExtract(URI)
-print 'URI: found ' + str(len(location)) + ' items\n'
-main(location, URI)
+if __name__ == "__main__":
+	location = scrapyExtract(URI)
+	print '\nURI: found ' + str(len(location)) + ' items.'
+	main(location, URI)
