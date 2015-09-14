@@ -1,5 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 
+import math
+
 """
 Tìm số fibonacci thứ n
 """
@@ -9,9 +11,8 @@ def fibo(n):
 	else:
 		return fibo(n - 1) + fibo(n - 2)
 		
-x = fibo(6)
+print fibo(6)
 
-print x
 
 """
 Dãy số fibonacci nhỏ hơn 100
@@ -24,3 +25,14 @@ def fibo2():
 		a, b = b, a + b
 		
 fibo2()
+
+
+def soNguyenTo(n):
+	for x in range(2, int(math.ceil(math.sqrt(n)))):
+		if (n%x == 0):
+			return False
+		else:
+			return True
+			
+print '\n\n'  + str(soNguyenTo(73))		
+	
