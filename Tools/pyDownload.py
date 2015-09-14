@@ -12,7 +12,7 @@ import requests
 import urllib
 import scrapy
 import mimetypes
-URI = 'http://www.cse.hcmut.edu.vn/~hungnq/courses/lopchuyendoi/'
+URI = 'http://fit.hcmup.edu.vn/~longab/GiaoTrinh/ComputerGraphics/LyThuyet/Sach%20Do%20Hoa/'
 _name = 'pyDownload'
 
 def html(url):
