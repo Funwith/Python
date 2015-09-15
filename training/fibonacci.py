@@ -6,7 +6,7 @@ import math
 Tìm số fibonacci thứ n
 """
 def fibo(n):
-	if (n == 0 or n == 1):
+	if (n == 1 or n == 2):
 		return 1
 	else:
 		return fibo(n - 1) + fibo(n - 2)
@@ -15,16 +15,16 @@ print fibo(6)
 
 
 """
-Dãy số fibonacci nhỏ hơn 100
+Dãy số fibonacci nhỏ hơn n
 """
 
-def fibo2():
+def fibo2(n):
 	a, b = 0, 1
-	while b < 100:
+	while b < n:
 		print b,
 		a, b = b, a + b
 		
-fibo2()
+fibo2(100)
 
 
 def soNguyenTo(n):
