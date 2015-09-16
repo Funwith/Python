@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vietworm'
 
+# Object is instance of class
 # Class constructor
 
 
