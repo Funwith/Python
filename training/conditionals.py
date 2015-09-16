@@ -8,3 +8,9 @@ else:
     print('a = {} is greater than b({})'.format(a, b))
 
 print("Foo" if a < b else "Bar")
+
+
+#Read the lines from the file
+R = open('fibonacci.py')
+for line in R.readlines():
+    print(line, '')
